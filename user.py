@@ -4,27 +4,13 @@ from tkinter import messagebox
 
 class User:
     def __init__(self, username: str, balance: float, balance_label: tk.Label, stocks: dict):
-        """
-        Инициализирует объект User.
-
-        :param username: Имя пользователя
-        :param balance: Баланс пользователя
-        :param balance_label: Виджет для отображения баланса
-        :param stocks: Словарь акций
-        """
         self.username = username
         self.balance = balance
         self.portfolio = {}
-        self.balance_label = balance_label  # Виджет для отображения баланса
-        self.stocks = stocks  # Доступные акции
+        self.balance_label = balance_label
+        self.stocks = stocks
 
     def buy_stock(self, stock, amount: int):
-        """
-        Покупает определённое количество акций.
-
-        :param stock: Акция для покупки
-        :param amount: Количество акций
-        """
         total_price = stock.price * amount
         if self.balance < total_price:
             messagebox.showerror("Ошибка", "Недостаточно денег для покупки.")
@@ -35,12 +21,6 @@ class User:
         self.update_balance_label()
 
     def sell_stock(self, stock, amount: int):
-        """
-        Продает определённое количество акций.
-
-        :param stock: Акция для продажи
-        :param amount: Количество акций
-        """
         if stock.name not in self.portfolio or self.portfolio[stock.name] < amount:
             messagebox.showerror("Ошибка", "Недостаточно акций для продажи.")
             return
@@ -50,16 +30,13 @@ class User:
         self.portfolio[stock.name] -= amount
 
         if self.portfolio[stock.name] == 0:
-            del self.portfolio[stock.name]  # Удаляем акцию, если проданы все
+            del self.portfolio[stock.name]
 
         messagebox.showinfo("Продажа",
                             f"Вы продали {amount} акций {stock.name}. Ваш текущий баланс: ${self.balance:.2f}")
         self.update_balance_label()
 
     def check_portfolio(self):
-        """
-        Проверяет статус портфеля и отображает информацию.
-        """
         total_value = self.balance
         portfolio_details = []
 
@@ -74,7 +51,4 @@ class User:
         messagebox.showinfo("Ваш портфель", portfolio_message if portfolio_details else "Портфель пуст.")
 
     def update_balance_label(self):
-        """
-        Обновляет отображение баланса на экране.
-        """
         self.balance_label.config(text=f"Баланс: ${self.balance:.2f}")
