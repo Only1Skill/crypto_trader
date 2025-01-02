@@ -3,13 +3,6 @@ from tkinter import messagebox
 
 
 def create_app(user, stocks, root):
-    """
-    Создает графический интерфейс приложения.
-    :param user: Экземпляр класса User
-    :param stocks: Доступные акции
-    :param root: Главное окно приложения
-    """
-
     global stock_name_entry, amount_entry
 
     def buy_stock():
@@ -47,7 +40,6 @@ def create_app(user, stocks, root):
         report_data = "\n".join(f"{stock.name}: {stock.price_history}" for stock in stocks.values())
         messagebox.showinfo("Отчет по активам", report_data if report_data else "Нет данных для отчета.")
 
-    # Создание компонентов интерфейса
     tk.Label(root, text="Криптовалюта:", font=("Arial", 12)).pack()
     stock_name_entry = tk.Entry(root)
     stock_name_entry.pack(pady=5)
@@ -62,5 +54,4 @@ def create_app(user, stocks, root):
     tk.Button(root, text="Обновить цены", command=update_prices, width=20).pack(pady=5)
     tk.Button(root, text="Показать отчет", command=show_report, width=20).pack(pady=5)
 
-    # Запуск основного цикла обработки событий
     root.mainloop()
